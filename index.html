@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="so">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fajr Flight Airline</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="scroll-progress" id="scrollBar"></div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i data-lucide="plane" class="logo-icon"></i>
+                <span class="logo-text">Fajr Flight</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active" data-i18n="nav_home">Hoyga</a></li>
+                <li><a href="#booking" data-i18n="nav_booking">Ballan duulimaad</a></li>
+                <li><a href="#destinations" data-i18n="nav_destinations">Duulimaadyada</a></li>
+                <li><a href="#services-section" data-i18n="nav_services">Adeegyada</a></li>
+                <li><a href="#contact-section" data-i18n="nav_contact">Nala soo xiriir</a></li>
+            </ul>
+            <div class="nav-actions">
+                <select id="language-selector" class="lang-select">
+                    <option value="so">Som Somali</option>
+                    <option value="en">Eng English</option>
+                </select>
+                <button class="nav-cta" id="login-btn" data-i18n="nav_register">Is diiwangeli</button>
+            </div>
+            <div class="mobile-toggle">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span data-i18n="hero_title_1">Ku Safar Nabad & Raaxo</span><br>
+                <span class="highlight">Fajr Flight Airline</span>
+            </h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">Diyaarada ugu casrisan gayiga Soomaaliya. Isku xirka
+                gobolada dalka oo leh adeeg heer sare ah.</p>
+
+            <!-- Booking Widget -->
+            <div id="booking" class="booking-widget">
+                <form class="booking-form" id="flight-search-form">
+                    <div class="input-group">
+                        <label data-i18n="label_from">Ka yimid (From)</label>
+                        <div class="input-with-icon-small">
+                            <i data-lucide="map-pin"></i>
+                            <select id="from-loc">
+                                <option value="MGQ">Mogadishu (MGQ)</option>
+                                <option value="HGA">Hargeisa (HGA)</option>
+                                <option value="BSA">Bosaso (BSA)</option>
+                                <option value="GGR">Garowe (GGR)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="label_to">Ku socda (To)</label>
+                        <div class="input-with-icon-small">
+                            <i data-lucide="plane"></i>
+                            <select id="to-loc">
+                                <option value="HGA">Hargeisa (HGA)</option>
+                                <option value="MGQ">Mogadishu (MGQ)</option>
+                                <option value="KMU">Kismayo (KMU)</option>
+                                <option value="BIB">Baydhabo (BIB)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="label_date">Taariikhda</label>
+                        <div class="input-with-icon-small">
+                            <i data-lucide="calendar"></i>
+                            <input type="date" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="label_passengers">Rakaabka</label>
+                        <div class="input-with-icon-small">
+                            <i data-lucide="users"></i>
+                            <select>
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3+ People</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="search-btn premium-btn">
+                        <span data-i18n="btn_search">Raadi Duulimaad</span> <i data-lucide="arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Support -->
+    <a href="https://wa.me/252619643334" class="floating-support" target="_blank">
+        <i data-lucide="message-circle"></i>
+        <span>Nala hadal</span>
+    </a>
+
+    <!-- Results Section (Hidden by default) -->
+    <section id="flight-results" class="section results-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title" data-i18n="results_title">Duulimaadyada la helay</h2>
+            <div class="results-grid" id="results-container">
+                <!-- Results injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section id="destinations" class="section destinations reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="dest_title">Gobolada aan aadno</h2>
+                <p class="section-desc" data-i18n="dest_desc">Kasoo dooro meelaha ugu caansan oo aan duulimaadka tooska
+                    ah ku tagno.</p>
+            </div>
+
+            <div class="destinations-grid">
+                <!-- Card 1 -->
+                <div class="card destination-card">
+                    <div class="card-image">
+                        <img src="garowe.png" alt="Garowe City">
+                    </div>
+                    <div class="card-content">
+                        <h3>Garoowe</h3>
+                        <p>State House, Capital City</p>
+                        <div class="card-footer">
+                            <span class="price"><span data-i18n="price_start">Ka bilow</span> $90</span>
+                            <button class="card-btn book-now-btn" data-i18n="btn_book">Boos qabso</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card destination-card">
+                    <div class="card-image">
+                        <img src="hargeisa.png" alt="Hargeisa City">
+                    </div>
+                    <div class="card-content">
+                        <h3>Hargeisa</h3>
+                        <p>Naasa Hablood, Market</p>
+                        <div class="card-footer">
+                            <span class="price"><span data-i18n="price_start">Ka bilow</span> $100</span>
+                            <button class="card-btn book-now-btn" data-i18n="btn_book">Boos qabso</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card destination-card">
+                    <div class="card-image">
+                        <img src="bosaso.png" alt="Bosaso City">
+                    </div>
+                    <div class="card-content">
+                        <h3>Bosaso</h3>
+                        <p>Port City, Red Sea View</p>
+                        <div class="card-footer">
+                            <span class="price"><span data-i18n="price_start">Ka bilow</span> $95</span>
+                            <button class="card-btn book-now-btn" data-i18n="btn_book">Boos qabso</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section - Premium Redesign -->
+    <section id="about" class="section about-section-premium reveal">
+        <div class="container">
+            <div class="about-grid">
+                <!-- Image Side -->
+                <div class="about-image-wrapper">
+                    <div class="main-image">
+                        <img src="about.png" alt="Fajr Flight Plane">
+                    </div>
+                </div>
+
+                <!-- Content Side -->
+                <div class="about-content-premium">
+                    <div class="section-label" data-i18n="about_title">Ku saabsan Fajr Flight</div>
+                    <h2 class="about-title">
+                        Hogaamiyaha Duulimaadyada <span class="highlight">Gudaha Soomaaliya</span>
+                    </h2>
+                    <p class="about-text" data-i18n="about_text_full">
+                        Fajr Flight Airline waa shirkadda ugu casrisan ee ka hawlgasha gayiga Soomaaliya. Waxaan u
+                        taaganahay inaan isku xirno gobolada dalka oo dhan anagoo bixina adeeg la isku halayn karo,
+                        raqiis ah, oo tayo sare leh.
+                    </p>
+                    <p class="about-text">
+                        Waxaan mudnaanta koowaad siinaa raaxada iyo badqabka rakaabkayaga, anagoo adeegsanayna diyaarado
+                        casri ah iyo shaqaale tababaran.
+                    </p>
+
+                    <!-- Features/Stats Grid -->
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i data-lucide="shield-check"></i></div>
+                            <div>
+                                <h4>Badqabka</h4>
+                                <p>100% Safety Record</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i data-lucide="clock"></i></div>
+                            <div>
+                                <h4>Waqtiga</h4>
+                                <p>Mar walba on-time</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#contact-section" class="btn-outline">
+                        Wax badan ogow <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (New Premium) -->
+    <section id="services-section" class="section services-premium reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="nav_services">Adeegyada Premium</h2>
+                <p class="section-desc">Waxaan kuu dejinay adeegyo heer sare ah si aad u dareento raaxada ugu sareysa.
+                </p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i data-lucide="armchair"></i></div>
+                    <h3 data-i18n="service_1">Business Class</h3>
+                    <p data-i18n="service_1_desc">Kuraas raaxo leh oo sariir isu badasha, iyo cuntooyin macaan oo
+                        caalami ah.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i data-lucide="loader"></i></div>
+                    <h3 data-i18n="service_2">Fast Track</h3>
+                    <p data-i18n="service_2_desc">Si degdeg ah u mar garoonka adigoo iska dharbaaxaya safafka dhaadheer.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i data-lucide="coffee"></i></div>
+                    <h3 data-i18n="service_3">Luxury Lounge</h3>
+                    <p data-i18n="service_3_desc">Ku naso qolalkayaga nasashada oo leh internet degdeg ah iyo cabitaano
+                        bilaash ah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section (Jadwalka) -->
+    <section id="schedule" class="section schedule-section reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="schedule_title">Jadwalka Duulimaadyada</h2>
+                <p class="section-desc" data-i18n="schedule_desc">Fadlan halkan ka eeg maalmaha aan baxno.</p>
+            </div>
+            <div class="schedule-container">
+                <div class="table-responsive">
+                    <table class="premium-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="table_day">Maalinta</th>
+                                <th data-i18n="table_from">Ka yimid (From)</th>
+                                <th></th>
+                                <th data-i18n="table_to">Ku socda (To)</th>
+                                <th data-i18n="table_time">Saacada</th>
+                                <th data-i18n="table_status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="day-cell" data-label="Maalinta"><span class="day-badge"
+                                        data-i18n="day_sat">Sabti</span></td>
+                                <td class="loc-cell" data-label="Ka yimid">Mogadishu (MGQ)</td>
+                                <td class="icon-cell"><i data-lucide="plane-takeoff"></i></td>
+                                <td class="loc-cell" data-label="Ku socda">Hargeisa (HGA)</td>
+                                <td class="time-cell" data-label="Saacada"><strong>08:00 AM</strong></td>
+                                <td class="status-cell" data-label="Status"><span class="status-on-time">On Time</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="day-cell" data-label="Maalinta"><span class="day-badge"
+                                        data-i18n="day_mon">Isniin</span></td>
+                                <td class="loc-cell" data-label="Ka yimid">Hargeisa (HGA)</td>
+                                <td class="icon-cell"><i data-lucide="plane-takeoff"></i></td>
+                                <td class="loc-cell" data-label="Ku socda">Bosaso (BSA)</td>
+                                <td class="time-cell" data-label="Saacada"><strong>10:30 AM</strong></td>
+                                <td class="status-cell" data-label="Status"><span class="status-on-time">On Time</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="day-cell" data-label="Maalinta"><span class="day-badge"
+                                        data-i18n="day_wed">Arbaco</span></td>
+                                <td class="loc-cell" data-label="Ka yimid">Mogadishu (MGQ)</td>
+                                <td class="icon-cell"><i data-lucide="plane-takeoff"></i></td>
+                                <td class="loc-cell" data-label="Ku socda">Kismayo (KMU)</td>
+                                <td class="time-cell" data-label="Saacada"><strong>09:00 AM</strong></td>
+                                <td class="status-cell" data-label="Status"><span
+                                        class="status-boarding">Boarding</span></td>
+                            </tr>
+                            <tr>
+                                <td class="day-cell" data-label="Maalinta"><span class="day-badge"
+                                        data-i18n="day_fri">Jimco</span></td>
+                                <td class="loc-cell" data-label="Ka yimid">Garowe (GGR)</td>
+                                <td class="icon-cell"><i data-lucide="plane-takeoff"></i></td>
+                                <td class="loc-cell" data-label="Ku socda">Mogadishu (MGQ)</td>
+                                <td class="time-cell" data-label="Saacada"><strong>02:00 PM</strong></td>
+                                <td class="status-cell" data-label="Status"><span class="status-on-time">On Time</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Terms Section -->
+    <section id="terms" class="section terms-section reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="terms_title">Sharuudaha Safarka</h2>
+                <p class="section-desc" data-i18n="terms_desc">Fadlan hubi shuruudahan muhiimka ah ka hor inta aadan u
+                    safrin garoonka.</p>
+            </div>
+
+            <div class="terms-grid">
+                <div class="term-card">
+                    <div class="term-icon-box blue">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <div class="term-info">
+                        <h4 data-i18n="term_1_title">Imaanashada Labo Saac Kahor</h4>
+                        <p data-i18n="term_1">Rakaabka waa inuu diyaar garoobaa 2 saac ka hor waqtiga bixitaanka si loo
+                            dhameystiro check-in-ka.</p>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-icon-box gold">
+                        <i data-lucide="briefcase"></i>
+                    </div>
+                    <div class="term-info">
+                        <h4 data-i18n="term_2_title">Xadka Miisaanka (Baggage)</h4>
+                        <p data-i18n="term_2">Miisaanka la ogolyahay rakaab kasta waa 20kg (Boorso weyn) iyo 7kg
+                            (Boorsada gacanta).</p>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-icon-box burgundy">
+                        <i data-lucide="alert-octagon"></i>
+                    </div>
+                    <div class="term-info">
+                        <h4 data-i18n="term_3_title">Lacag soo celinta (Refund)</h4>
+                        <p data-i18n="term_3">Tikidhka lacagtiisa dib looma celinayo hadii la goosto (Non-refundable)
+                            ama la dhaafo duulimaadka.</p>
+                    </div>
+                </div>
+
+                <div class="term-card">
+                    <div class="term-icon-box green">
+                        <i data-lucide="user-check"></i>
+                    </div>
+                    <div class="term-info">
+                        <h4 data-i18n="term_4_title">Aqoonsiga Muhiimka ah</h4>
+                        <p data-i18n="term_4">Waa in rakaab kasta uu wataa aqoonsi sax ah oo sawir leh (Passport ama ID
+                            Card).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terms-footer-note">
+                <p><i data-lucide="info"></i> Wixii macluumaad dheeraad ah, fadlan la xiriir xafiiskayaga ama wac
+                    lambarkayaga gaarka ah.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact-section" class="section contact-section-premium reveal">
+        <div class="container">
+            <div class="contact-premium-wrapper">
+                <!-- Contact Info Side (Premium Look) -->
+                <div class="contact-info-panel">
+                    <div class="panel-content">
+                        <h2 data-i18n="contact_title">Nala soo xiriir</h2>
+                        <p class="panel-desc" data-i18n="contact_desc">Ma haysaa su'aal? Fariin noo soo dir.
+                            Shaqaalahayagu waxay diyaar u yihiin inay ku caawiyaan 24/7.</p>
+
+                        <div class="contact-details-list">
+                            <div class="detail-item">
+                                <div class="icon-circle">
+                                    <i data-lucide="map-pin"></i>
+                                </div>
+                                <div>
+                                    <h5>Xarunta Dhexe</h5>
+                                    <p>Jidka number 4, Mogadishu</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="icon-circle">
+                                    <i data-lucide="phone"></i>
+                                </div>
+                                <div>
+                                    <h5>Naga soo wac</h5>
+                                    <p>+252 61 9643334</p>
+                                </div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="icon-circle">
+                                    <i data-lucide="mail"></i>
+                                </div>
+                                <div>
+                                    <h5>Email noo dir</h5>
+                                    <p>support@fajrflight.com</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links-panel">
+                            <a href="#"><i data-lucide="facebook"></i></a>
+                            <a href="#"><i data-lucide="twitter"></i></a>
+                            <a href="#"><i data-lucide="instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Side -->
+                <div class="contact-form-panel">
+                    <form class="real-contact-form">
+                        <h3 class="form-heading">Fariin Dir</h3>
+                        <div class="form-row">
+                            <div class="form-group premium-input">
+                                <label data-i18n="label_name">Magacaaga</label>
+                                <input type="text" placeholder="Magaca oo sadexan..." required>
+                            </div>
+                            <div class="form-group premium-input">
+                                <label data-i18n="label_phone">Telefoonka</label>
+                                <input type="tel" placeholder="+252..." required>
+                            </div>
+                        </div>
+                        <div class="form-group premium-input">
+                            <label data-i18n="label_email">Email Address</label>
+                            <input type="email" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group premium-input">
+                            <label data-i18n="label_message">Fariintaada</label>
+                            <textarea rows="4" placeholder="Sidee baan kuu caawin karnaa..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn premium-btn">
+                            <span data-i18n="btn_send">Dir Fariinta</span>
+                            <i data-lucide="send"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Ultra Compact Professional -->
+    <footer id="footer" class="airline-footer">
+        <div class="container">
+            <div class="footer-mini-grid">
+                <div class="footer-brand-mini">
+                    <div class="logo">
+                        <i data-lucide="plane"></i>
+                        <span>Fajr Flight</span>
+                    </div>
+                    <p data-i18n="hero_subtitle">Diyaarada ugu casrisan gayiga Soomaaliya.</p>
+                </div>
+
+                <div class="footer-links-mini">
+                    <h4 data-i18n="footer_links">Xiriir</h4>
+                    <div class="mini-links">
+                        <a href="#about" data-i18n="nav_about">About</a>
+                        <a href="#booking" data-i18n="nav_booking">Booking</a>
+                        <a href="#terms" data-i18n="nav_terms">Terms</a>
+                        <a href="#contact-section" data-i18n="nav_contact">Contact</a>
+                    </div>
+                </div>
+
+                <div class="footer-subs-mini">
+                    <h4 data-i18n="newsletter_title">Newsletter</h4>
+                    <form class="mini-sub-form">
+                        <input type="email" placeholder="Email...">
+                        <button type="submit"><i data-lucide="arrow-right"></i></button>
+                    </form>
+                </div>
+
+                <div class="footer-pay-mini">
+                    <span data-i18n="we_accept">Accept:</span>
+                    <div class="payment-badges">
+                        <span class="pay-badge evc">EVC</span>
+                        <span class="pay-badge zaad">Zaad</span>
+                        <span class="pay-badge sahal">Sahal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-mini">
+                <p>&copy; 2026 Fajr Flight Airline</p>
+                <div class="social-mini">
+                    <a href="#"><i data-lucide="facebook"></i></a>
+                    <a href="#"><i data-lucide="twitter"></i></a>
+                    <a href="#"><i data-lucide="instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Register Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content premium-auth-card">
+            <span class="close-modal">&times;</span>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login" data-i18n="btn_login">Login</button>
+                <button class="tab-btn" data-tab="register" data-i18n="btn_register">Register</button>
+            </div>
+
+            <div class="auth-forms-container">
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <div class="auth-header">
+                        <h3 data-i18n="auth_welcome">Ku soo dhawaaw!</h3>
+                        <p data-i18n="auth_login_desc">Fadlan gal xogtaada si aad u sii wadato.</p>
+                    </div>
+                    <div class="form-group premium-input">
+                        <label>Email Address</label>
+                        <div class="input-with-icon">
+                            <i data-lucide="mail"></i>
+                            <input type="email" placeholder="example@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group premium-input">
+                        <label>Password</label>
+                        <div class="input-with-icon">
+                            <i data-lucide="lock"></i>
+                            <input type="password" placeholder="········" required>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me"><input type="checkbox"> <span data-i18n="auth_remember">I
+                                xasuusno</span></label>
+                        <a href="#" class="forgot-link" data-i18n="auth_forgot">Ma halmaantay password-ka?</a>
+                    </div>
+                    <button type="submit" class="modal-btn premium-btn" data-i18n="btn_login_submit">Gal
+                        Akoonka</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form">
+                    <div class="auth-header">
+                        <h3 data-i18n="auth_register_title">Sameyso Akoon</h3>
+                        <p data-i18n="auth_register_desc">Ku biir qoyska Fajr Flight maanta.</p>
+                    </div>
+                    <div class="form-group premium-input">
+                        <label data-i18n="label_name">Magacaaga</label>
+                        <div class="input-with-icon">
+                            <i data-lucide="user"></i>
+                            <input type="text" placeholder="Magacaaga oo buuxa" required>
+                        </div>
+                    </div>
+                    <div class="form-group premium-input">
+                        <label>Email Address</label>
+                        <div class="input-with-icon">
+                            <i data-lucide="mail"></i>
+                            <input type="email" placeholder="example@email.com" required>
+                        </div>
+                    </div>
+                    <div class="form-group premium-group-row">
+                        <div class="form-group premium-input">
+                            <label>Password</label>
+                            <div class="input-with-icon">
+                                <i data-lucide="lock"></i>
+                                <input type="password" placeholder="········" required>
+                            </div>
+                        </div>
+                        <div class="form-group premium-input">
+                            <label data-i18n="label_phone">Telefoonka</label>
+                            <div class="input-with-icon">
+                                <i data-lucide="phone"></i>
+                                <input type="tel" placeholder="+252..." required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="modal-btn premium-btn" data-i18n="btn_register_submit">Sameyso
+                        Akoon</button>
+                    <div class="terms-text" data-i18n="auth_terms">Markaad is diiwangaliso, waxaad ogolaatay <a
+                            href="#">Shuruudahayaga</a>.</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
